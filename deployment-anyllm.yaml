@@ -1,0 +1,51 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: anyllm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anyllm
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: anyllm
+    spec:
+      restartPolicy: Always
+      serviceAccountName: default
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: anyllm
+          ports:
+            - containerPort: 3001
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: app-data
+              mountPath: /app/server/storage
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: anyllm-config
+          image: 'mintplexlabs/anythingllm:latest'
+      serviceAccount: default
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: anyllm-storage
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
