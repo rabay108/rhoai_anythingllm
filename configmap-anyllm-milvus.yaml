@@ -1,0 +1,18 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: anyllm-config-milvus
+data:
+  PORT: '3001'
+  GENERIC_OPEN_AI_MODEL_PREF: mistral-7b-instruct
+  LLM_PROVIDER: generic-openai
+  STORAGE_DIR: /app/server/storage
+  GENERIC_OPEN_AI_BASE_PATH: 'https://mistral-7b-instruct-v0-3-maas-apicast-production.<domain>.com:443/v1'
+  NODE_ENV: production
+  GENERIC_OPEN_AI_API_KEY: <yourapikey>
+  MILVUS_USERNAME: root
+  MILVUS_URL: 'vectordb-milvus.milvus.svc.cluster.local:19530'
+  GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT: '4096'
+  MILVUS_PASSWORD: Milvus
+  MILVUS_ADDRESS: 'vectordb-milvus.milvus.svc.cluster.local:19530'
+  VECTOR_DB: milvus

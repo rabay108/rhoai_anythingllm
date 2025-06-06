@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: anyllm-config
+data:
+  GENERIC_OPEN_AI_API_KEY: <yourapikey>
+  GENERIC_OPEN_AI_BASE_PATH: 'https://mistral-7b-instruct-v0-3-maas-apicast-production.<domain>:443/v1'
+  GENERIC_OPEN_AI_MODEL_PREF: mistral-7b-instruct
+  GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT: '4096'
+  LLM_PROVIDER: generic-openai
+  NODE_ENV: production
+  PORT: '3001'
+  VECTOR_DB: lancedb
