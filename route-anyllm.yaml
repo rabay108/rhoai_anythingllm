@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: demomv
+spec:
+  host: demomv-anyllm.apps.<your_domain_name>
+  path: /
+  to:
+    kind: Service
+    name: anyllmsvc
+    weight: 100
+  port:
+    targetPort: 3001
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
+  wildcardPolicy: None
