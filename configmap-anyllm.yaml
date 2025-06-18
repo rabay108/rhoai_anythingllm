@@ -11,3 +11,4 @@ data:
   NODE_ENV: production
   PORT: '3001'
   VECTOR_DB: lancedb
+  STORAGE_DIR: /home/user/app/storage
