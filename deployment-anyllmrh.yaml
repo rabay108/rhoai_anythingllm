@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anyllm
+  labels:
+    app: anyllm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anyllm
+  template:
+    metadata:
+      labels:
+        app: anyllm
+    spec:
+      serviceAccountName: default  # or a custom SA with correct SCC if needed
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: anythingllm
+          image: quay.io/rh-aiservices-bu/anythingllm-workbench:latest
+          ports:
+            - containerPort: 3001
+          envFrom:
+            - configMapRef:
+                name: anyllm-config
+          volumeMounts:
+            - name: storage-vol
+              mountPath: /home/user/app/storage
+      volumes:
+        - name: storage-vol
+          persistentVolumeClaim:
+            claimName: anyllm-storage
+
